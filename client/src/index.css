@@ -1,0 +1,44 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    /* background-image: url("../public/sky_timeslapse.webp"); */
+    background-image: url("../public/plane.jpg");
+    z-index: -1;
+}
+
+.background-slider {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+    z-index: 1;
+}
+
+
+/* Apply the fade-out effect */
+
+.background-image.fade-out {
+    opacity: 0;
+}
