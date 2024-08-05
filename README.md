@@ -1,6 +1,5 @@
 Here's the complete `README.md` content for your project:
 
-```markdown
 # Project Name
 
 ## Description

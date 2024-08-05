@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useContext, useState } from "react";
-import { logMessage } from "./api";
 import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
@@ -19,7 +18,6 @@ export const AuthProvider = ({ children }) => {
     try {
       return jwtDecode(token);
     } catch (error) {
-      console.error("Invalid token:", error);
       return null;
     }
   };
@@ -29,7 +27,6 @@ export const AuthProvider = ({ children }) => {
     setAuth(true);
     window.location.href = "/";
     const userInfo = decodeToken(token);
-    logMessage("User logged in. id: " + userInfo.id);
   };
 
   const logout = () => {
@@ -37,7 +34,6 @@ export const AuthProvider = ({ children }) => {
     setAuth(false);
     const userInfo = decodeToken(token);
     window.location.href = "/login";
-    logMessage("User logged out. id: " + userInfo.id);
   };
 
   return (

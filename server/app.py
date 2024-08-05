@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request
 from flask_seeder import FlaskSeeder
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 from server.models import db
 from server.logger import logger
 from server.api import register_resources
+from server.logger import logger
 
 app = Flask(__name__)
 
@@ -35,6 +36,10 @@ Migrate(app, db)
 seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
+@app.before_request
+def log_request():
+    logger.info(f"Request: {request.method} {request.url}")
+    
 CORS(app)
 register_resources(app)
 

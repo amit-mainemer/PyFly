@@ -1,9 +1,12 @@
-
+INFO_MESSAGE="\033[1;34mUsage: pyfly [option]\033[0m\n\033[1;32mOptions:\033[0m\n\033[1;33m  start\033[0m            Start and build the Docker containers in detached mode.\n\033[1;33m  db_setup\033[0m         Run database migrations using Flask.\n\033[1;33m  local_db\033[0m         Run a local PostgreSQL container on port 5433.\n\033[1;33m  tests\033[0m            Execute the test suite using pytest.\n\033[1;33m  lint\033[0m             Run pylint for code linting.\n\033[1;33m  server_rebuild\033[0m   Rebuild and restart the server container.\n\033[1;33m  client_rebuild\033[0m   Rebuild and restart the client container.\n\033[1;33m  open_postgres\033[0m    Open a bash shell in the PostgreSQL container.\n\033[1;33m  open_redis\033[0m       Open a bash shell in the Redis container."
 
 function pyfly() {
     case "$1" in
-        "init")
-            docker compose up -d --build && docker-compose exec server bash flask db init && docker-compose exec server bash flask db migrate -m "init" && docker-compose restart server
+        "start")
+            docker compose up -d --build
+        ;;
+        "db_setup")
+            docker-compose exec server bash flask db upgrade
         ;;
         "local_db")
             docker run  -d \
@@ -26,8 +29,14 @@ function pyfly() {
         "client_rebuild")
             docker compose build client && docker compose up -d
         ;;
+        "open_postgres")
+           docker exec -it flask_postgres /bin/bash
+        ;;
+        "open_redis")
+            docker exec -it redis-1 /bin/bash
+        ;;
         *)
-            echo "please enter the following options [init, local_db, tests, server_rebuild]"
+            echo -e "$INFO_MESSAGE"
         ;;
     esac
 }

@@ -1,5 +1,5 @@
 import requests
-import numpy as np
+import json
 from flask_seeder import Seeder
 from server.models import Country
 from server.logger import logger
@@ -18,7 +18,7 @@ class CountrySeeder(Seeder):
 
         res = requests.get(url="https://restcountries.com/v3.1/all")
         data = res.json()
-        arr = np.array(data)
+        arr = json.loads(data)
         for country in arr:
             countryName = country["name"]["official"]
             country = Country(countryName, country["cca3"])

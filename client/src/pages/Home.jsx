@@ -53,7 +53,9 @@ export const Home = () => {
     <Box
       style={{ padding: 24, display: "flex", flexDirection: "column", gap: 24 }}
     >
-      <FlightsFrom countries={countries} searchFlights={searchFlights} />
+      {countries && (
+        <FlightsFrom countries={countries} searchFlights={searchFlights} />
+      )}
       {flights && flights.length > 0 ? (
         <FlightsList
           flights={flights}

@@ -14,7 +14,7 @@ import FlightIcon from "@mui/icons-material/Flight";
 import EventIcon from "@mui/icons-material/Event";
 import FlightClassIcon from "@mui/icons-material/FlightClass";
 import { useAuth } from "../../AuthContext";
-import { api, logMessage } from "../../api";
+import { api } from "../../api";
 import { useSnackbar } from "../../SnackbarContext";
 
 export const FlightCard = ({ flight, refresh }) => {
@@ -26,10 +26,8 @@ export const FlightCard = ({ flight, refresh }) => {
         user_id: user.id,
         flight_id: flight.id,
       });
-      console.log("response", response);
       pop({message: "Ticket was bought successfully", severity: "success"});
       refresh();
-      logMessage(`User ${user.id} bought new ticket`)
     } catch (ex) {
       console.warn(ex);
     }
