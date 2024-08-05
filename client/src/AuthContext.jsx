@@ -1,37 +1,47 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { createContext, useEffect, useContext, useState } from "react";
+import { logMessage } from "./api";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
-  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    // Check if there is a token in localStorage
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-      navigate("/login");
+    setAuth(!!token);
+    setUser(decodeToken(token)?.sub);
+  }, [token]);
+
+  const decodeToken = (token) => {
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      console.error("Invalid token:", error);
+      return null;
     }
-  }, [navigate]);
+  };
 
   const login = (token) => {
     localStorage.setItem("access_token", token);
     setAuth(true);
-    navigate("/");
+    window.location.href = "/";
+    const userInfo = decodeToken(token);
+    logMessage("User logged in. id: " + userInfo.id);
   };
 
   const logout = () => {
     localStorage.removeItem("access_token");
     setAuth(false);
-    navigate("/login"); 
+    const userInfo = decodeToken(token);
+    window.location.href = "/login";
+    logMessage("User logged out. id: " + userInfo.id);
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,15 +1,14 @@
-
-from flask_restful import Resource, request
 from flask import jsonify
-from models import User, db
-from logger import logger
-from schemas import CreateUserSchema, user_to_dict
-    
+from flask_restful import Resource, request
+from server.models import User, db
+from server.schemas import CreateUserSchema, user_to_dict
+
+
 class UserResource(Resource):
     def get(self, id):
         user = User.query.get_or_404(id)
         return user_to_dict(user), 200
-    
+
     def put(self, id):
         user = User.query.get_or_404(int(id))
         data = request.get_json()
@@ -18,19 +17,16 @@ class UserResource(Resource):
         if errors:
             return errors, 400
 
-        user.name = data['name']
-        user.password = data['password']
+        user.name = data["name"]
+        user.password = data["password"]
         db.session.commit()
         return user_schema.dump(user)
-        
-    
+
     def delete(self, id):
-      
         user = User.query.get(id)
         if user is None:
             return {"message": "User not found"}, 400
-        
+
         db.session.delete(user)
         db.session.commit()
         return {"message": "User deleted successfully"}, 200
-            

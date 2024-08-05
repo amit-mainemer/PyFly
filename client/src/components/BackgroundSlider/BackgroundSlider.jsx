@@ -18,7 +18,7 @@ const BackgroundSlider = () => {
         setCurrentImage((currentImage + 1) % images.length);
         setIsTransitioning(false);
       }, 1000); // Duration of the transition in milliseconds
-    }, 8000); // Interval for changing images
+    }, 10000); // Interval for changing images
 
     return () => clearInterval(interval);
   }, [currentImage]);

@@ -10,6 +10,12 @@ export const routes = [{
         Component: Home,
     },
     {
+        link: "/profile",
+        name: "Profile",
+        isProtected: true,
+        Component: Profile,
+    },
+    {
         link: "/login",
         name: "Login",
         Component: Login,
@@ -18,11 +24,5 @@ export const routes = [{
         link: "/signup",
         name: "Signup",
         Component: SignUp,
-    },
-    {
-        link: "/profile",
-        name: "Profile",
-        isProtected: true,
-        Component: Profile,
     },
 ];

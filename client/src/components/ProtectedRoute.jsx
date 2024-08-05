@@ -3,7 +3,6 @@ import { useAuth } from "../AuthContext";
 
 export const ProtectedRoute = () => {
   const { auth } = useAuth();
-
   // If not authenticated, redirect to the login page
   if (!auth) {
     return <Navigate to="/login" />;

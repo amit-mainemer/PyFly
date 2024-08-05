@@ -11,6 +11,7 @@ export const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+
   const submit = async () => {
     try {
       await api.post("/users", {
@@ -37,7 +38,6 @@ export const SignUpForm = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           variant="outlined"
-          autocomplete="pass"
         />
         <TextField
           label="ID Number"
@@ -46,7 +46,6 @@ export const SignUpForm = () => {
           type="number"
           onChange={(e) => setId(e.target.value)}
           variant="outlined"
-          autoComplete="id"
         />
         <TextField
           label="Password"
@@ -55,7 +54,6 @@ export const SignUpForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           variant="outlined"
           type="password"
-          autoComplete="pass"
         />
         <Box style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography className={css.caption} variant="caption" onClick={() => navigate("/login")}>already registered?</Typography>

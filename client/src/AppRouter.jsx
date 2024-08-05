@@ -3,13 +3,19 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { routes } from "./routes";
 import { Navbar } from "./components/Navbar/Navbar";
+import { Box } from "@mui/material";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AuthProvider } from "./AuthContext";
 
 export const AppRouter = () => (
   <Router>
-    <AuthProvider>
-      <Navbar />
+    <Navbar />
+    <Box
+      style={{
+        position: "relative",
+        height: "calc(100vh - 48px)",
+        overflowY: "scroll",
+      }}
+    >
       <Routes>
         {routes.map(({ link, Component, isProtected = false }) =>
           isProtected ? (
@@ -21,6 +27,6 @@ export const AppRouter = () => (
           )
         )}
       </Routes>
-    </AuthProvider>
+    </Box>
   </Router>
 );

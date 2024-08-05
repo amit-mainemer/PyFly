@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import css from "./LoginForm.module.css";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography, Alert } from "@mui/material";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import { api } from "../../api";
 import { useAuth } from "../../AuthContext";
@@ -8,7 +8,8 @@ import { useAuth } from "../../AuthContext";
 export const LoginForm = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const {login} = useAuth();
+  const [error, setError] = useState("");
+  const { login } = useAuth();
 
   const submit = async () => {
     try {
@@ -18,7 +19,8 @@ export const LoginForm = () => {
       });
       login(response.data.access_token);
     } catch (ex) {
-      console.warn(ex);
+      console.warn(ex.response.status);
+      setError("Wrong Credentials");
     }
   };
 
@@ -45,16 +47,22 @@ export const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           variant="outlined"
           type="password"
-          name="passpassword"
         />
+        <Box display={"flex"} justifyContent={"space-between"} gap={2}>
+          {error && (
+            <Alert severity="error" style={{ fontSize: "12px" }}>
+              {error}
+            </Alert>
+          )}
 
-        <Button
-          variant="contained"
-          style={{ width: "40%", marginLeft: "auto" }}
-          onClick={submit}
-        >
-          Login
-        </Button>
+          <Button
+            variant="contained"
+            style={{ width: "40%", marginLeft: "auto" }}
+            onClick={() => submit()}
+          >
+            Login
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

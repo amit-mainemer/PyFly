@@ -1,17 +1,24 @@
-import sys
+import logging
+import logging.handlers
+import json
 
-class Logger():
-    def debug(self, message: str):
-        print(f'[DEBUG] {message}', file=sys.stderr)
-        
-    def error(self, message: str):
-        print(f'[ERROR] {message}', file=sys.stderr)
-        
-    def warn(self, message: str):
-        print(f'[WARN] {message}', file=sys.stderr)
-        
-    def info(self, message: str):
-        print(f'[INFO] {message}', file=sys.stderr)
+class LogstashFormatter(logging.Formatter):
+    def format(self, record):
+        message = super().format(record)
+        return json.dumps({
+            "@timestamp": record.created,
+            "message": message,
+            "level": record.levelname,
+            "logger": record.name,
+        })
 
+logstash_host = 'logstash'
+logstash_port = 5044
 
-logger = Logger()
+logstash_handler = logging.handlers.SocketHandler(logstash_host, logstash_port)
+logstash_handler.setFormatter(LogstashFormatter())
+logstash_handler.setLevel(logging.INFO)
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(logstash_handler)

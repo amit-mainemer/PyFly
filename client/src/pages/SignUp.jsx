@@ -1,17 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import { SignUpForm } from "../components/SignUpForm/SignUpForm";
-import { useNavigate } from "react-router-dom";
+import { Navigate  } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 export const SignUp = () => {
-  const navigate = useNavigate();
   const { auth } = useAuth();
-  useEffect(() => {
-    if (auth) {
-      navigate("/");
-    }
-  }, [auth]);
+
+  if (auth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Box

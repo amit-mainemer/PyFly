@@ -1,13 +1,17 @@
 import { AppRouter } from "./AppRouter";
+import { AuthProvider } from "./AuthContext";
 import BackgroundSlider from "./components/BackgroundSlider/BackgroundSlider";
+import { SnackbarProvider } from "./SnackbarContext";
 
 function App() {
   return (
     <div className="App">
-      <BackgroundSlider />
-      <AppRouter />
-      {/* <div className="background"> */}
-      {/* </div> */}
+      <AuthProvider>
+        <SnackbarProvider>
+          <BackgroundSlider />
+          <AppRouter />
+        </SnackbarProvider>
+      </AuthProvider>
     </div>
   );
 }
