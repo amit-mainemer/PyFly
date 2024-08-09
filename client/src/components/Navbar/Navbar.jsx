@@ -24,7 +24,7 @@ export const Navbar = () => {
       >
         <Toolbar variant="dense">
           <IconButton color="inherit">
-            <FlightTakeoffIcon />
+            <FlightTakeoffIcon color="primary" />
           </IconButton>
           {auth ? (
             <>

@@ -1,30 +1,31 @@
 import logging
 import logging.handlers
+from logstash_async.handler import AsynchronousLogstashHandler
 import json
 
+logstash_host = 'logstash'
+logstash_port = 5044
 class LogstashFormatter(logging.Formatter):
     def format(self, record):
         message = super().format(record)
         return json.dumps({
-            "@timestamp": record.created,
             "message": message,
             "level": record.levelname,
             "logger": record.name,
         })
 
-# Logstash configuration
-logstash_host = 'logstash'
-logstash_port = 5044
 
 # Create Logstash handler
-logstash_handler = logging.handlers.SocketHandler(logstash_host, logstash_port)
+logstash_handler = AsynchronousLogstashHandler(
+    logstash_host, logstash_port, database_path= None)
 logstash_handler.setFormatter(LogstashFormatter())
 logstash_handler.setLevel(logging.INFO)
 
 # Create console handler
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-console_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+console_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+
 
 # Configure root logger
 logger = logging.getLogger()

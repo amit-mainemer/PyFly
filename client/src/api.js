@@ -1,15 +1,5 @@
 import axios from "axios";
 
-const logstashUrl = "http://logstash:5044";
-
-export const logMessage = (message, level = "info") => {
-  axios.post(logstashUrl, {
-    message,
-    level,
-    type: "ui",
-  });
-};
-
 export const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   headers: {
@@ -38,7 +28,6 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    logMessage(`api error interceptor status: ${error.response.status}`);
     if (error.response.status === 401) {
       localStorage.removeItem("access_token");
       window.location.href = "/login";

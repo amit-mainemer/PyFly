@@ -25,15 +25,11 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     localStorage.setItem("access_token", token);
     setAuth(true);
-    window.location.href = "/";
-    const userInfo = decodeToken(token);
   };
 
   const logout = () => {
     localStorage.removeItem("access_token");
     setAuth(false);
-    const userInfo = decodeToken(token);
-    window.location.href = "/login";
   };
 
   return (

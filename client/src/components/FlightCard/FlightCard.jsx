@@ -22,7 +22,7 @@ export const FlightCard = ({ flight, refresh }) => {
   const { pop } = useSnackbar();
   const buyTicket = useCallback(async () => {
     try {
-      const response = await api.post("/tickets", {
+     await api.post("/tickets", {
         user_id: user.id,
         flight_id: flight.id,
       });

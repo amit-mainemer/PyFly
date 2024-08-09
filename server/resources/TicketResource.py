@@ -1,3 +1,4 @@
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, request
 from server.models import Ticket, db
 from server.schemas import CreateTicketSchema, ticket_to_dict
@@ -9,6 +10,7 @@ class TicketResource(Resource):
         ticket = Ticket.query.get_or_404(id)
         return ticket_to_dict(ticket), 200
 
+    @jwt_required()
     def put(self, id):
         ticket = Ticket.query.get_or_404(int(id))
         data = request.get_json()
@@ -22,6 +24,7 @@ class TicketResource(Resource):
         db.session.commit()
         return ticket_schema.dump(ticket)
 
+    @jwt_required()
     def delete(self, id):
         logger.debug(id)
         ticket = Ticket.query.get(int(id))

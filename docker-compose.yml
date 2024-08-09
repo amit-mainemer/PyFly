@@ -12,9 +12,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    image: pyfly/pyfly_server:latest
     environment:
       FLASK_APP: app.py
       FLASK_ENV: ${FLASK_ENV}
@@ -32,9 +30,7 @@ services:
       - redis
 
   client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    image: pyfly/pyfly_client:latest
     environment:
       - REACT_APP_API_URL=${REACT_APP_API_URL}
     ports:

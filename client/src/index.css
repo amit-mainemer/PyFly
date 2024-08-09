@@ -5,11 +5,10 @@
 }
 
 .t-card {
-    background-color: #fefefe;
+    background-color: #fefefeee;
     padding: 30px;
     border-radius: 12px;
     color: black;
-    opacity: 0.9;
 }
 
 ::-webkit-scrollbar {

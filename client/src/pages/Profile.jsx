@@ -45,13 +45,19 @@ export const Profile = () => {
   return (
     <Box padding={"24px"} display="flex" flexDirection={"column"} gap={2}>
       <Box display={"flex"} justifyContent={"space-between"}>
-      <Box className="t-card">
-        <UserAvatar text={user.full_name.charAt(0)} />
-        <Typography variant="subtitle1">Hello {user.full_name}</Typography>
-      </Box>
-      <Box className="t-card">
-            total tickets: {tickets.length}
-      </Box>
+        <Box
+          className="t-card"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <UserAvatar text={user.full_name.charAt(0)} />
+          <Typography variant="subtitle1">Hello {user.full_name}</Typography>
+        </Box>
+        <Box className="t-card">
+          <Typography>Total tickets: {tickets.length}</Typography>
+        </Box>
       </Box>
       <Box className="t-card">
         <Typography>Here are your tickets:</Typography>

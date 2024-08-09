@@ -14,6 +14,7 @@ class CountrySeeder(Seeder):
         logger.info("Seeding CountrySeeder")
         countries = Country.query.all()
         if len(countries) > 0:
+            logger.info("Existing CountrySeeder. data exists")
             return
 
         res = requests.get(url="https://restcountries.com/v3.1/all")

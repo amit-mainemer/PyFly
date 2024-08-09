@@ -1,20 +1,21 @@
-from marshmallow import fields, validate, Schema
+from marshmallow import fields, validate, Schema, ValidationError
 from server.models import Country, User, Flight
 from server.logger import logger
 import re
 
+def validate_password(password):
+    if len(password) < 6:
+        raise ValidationError("Password must be at least 6 characters long")
+    if not any(char.isdigit() for char in password):
+        raise ValidationError("Password must contain at least one number")
+    if not any(char.isalpha() for char in password):
+        raise ValidationError("Password must contain at least one letter")
 
 class CreateUserSchema(Schema):
     full_name = fields.String(required=True, validate=validate.Length(min=1, max=100))
     password = fields.String(
         required=True,
-        validate=validate.And(
-            validate.Length(min=8),
-            validate.Regexp(
-                regex=re.compile("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"),
-                error="Password must contain at least one letter and one number",
-            ),
-        ),
+        validate=validate_password,
     )
     real_id = fields.Integer(required=True)
 

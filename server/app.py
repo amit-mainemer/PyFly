@@ -36,11 +36,7 @@ Migrate(app, db)
 seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
-@app.before_request
-def log_request():
-    logger.info(f"Request: {request.method} {request.url}")
-    
-CORS(app)
+CORS(app)    
 register_resources(app)
 
 if __name__ == '__main__':

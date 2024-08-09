@@ -1,10 +1,9 @@
 .container {
-    background-color: #fefefe;
+    background-color: #fefefeee;
     padding: 30px;
     border-radius: 12px;
     color: black;
     width: 380px;
-    opacity: 0.9;
 }
 
 .formContainer {
@@ -18,4 +17,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+.caption:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

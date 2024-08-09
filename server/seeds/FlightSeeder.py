@@ -24,6 +24,10 @@ class FlightSeeder(Seeder):
 
     def run(self):
         logger.info("Seeding FlightSeeder")
+        flights = Flight.query.all()
+        if len(flights) > 0:
+            logger.info("Exiting FlightSeeder. data exists")
+            return
         countries = Country.query.all()
         countries_dicts = [country_to_dict(country) for country in countries]
         for index, country in enumerate(countries_dicts):

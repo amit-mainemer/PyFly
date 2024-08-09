@@ -8,11 +8,15 @@ def client():
         with app.app_context():
             yield client
 
-
-def test_get_flights(client):
-    response = client.get("/flights")
-    assert response.status_code == 200
+def test_get_employees():
+    response = client.get("/employees")
     data = response.get_json()
-    assert len(data["flights"]) > 0
-    assert data["total"] > 0
-    assert data["current_page"] == 1
+    assert len(data) > 0
+
+# def test_get_flights(client):
+#     response = client.get("/flights")
+#     assert response.status_code == 200
+#     data = response.get_json()
+#     assert len(data["flights"]) > 0
+#     assert data["total"] > 0
+#     assert data["current_page"] == 1

@@ -15,6 +15,7 @@ class UserSeeder(Seeder):
         logger.info("Seeding UserSeeder")
         users = User.query.all()
         if len(users) > 0:
+            logger.info("Exiting UserSeeder. data exists")
             return
 
         for i in range(0, 50):

@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import css from "./SignUpForm.module.css";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Alert,
+  Typography,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 import { api } from "../../api";
 import { useNavigate } from "react-router-dom";
 
@@ -9,10 +22,18 @@ export const SignUpForm = () => {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const submit = async () => {
+    setError("")
     try {
       await api.post("/users", {
         full_name: name,
@@ -22,6 +43,12 @@ export const SignUpForm = () => {
       navigate("/login");
     } catch (ex) {
       console.warn(ex);
+
+      let errorString = ""
+      Object.entries(ex.response.data.messages).forEach(([key, value]) => {
+        errorString += `${key}: ${value} <br />`
+      })
+      setError(errorString)
     }
   };
 
@@ -29,7 +56,7 @@ export const SignUpForm = () => {
     <Box className={css.container}>
       <Box className={css.formContainer}>
         <Box className={css.title}>
-          <AirplanemodeActiveIcon />
+          <AirplanemodeActiveIcon color="primary" />
           <Typography variant="h6">Register to PyFly</Typography>
         </Box>
         <TextField
@@ -47,23 +74,50 @@ export const SignUpForm = () => {
           onChange={(e) => setId(e.target.value)}
           variant="outlined"
         />
-        <TextField
-          label="Password"
-          size="small"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          variant="outlined"
-          type="password"
-        />
-        <Box style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography className={css.caption} variant="caption" onClick={() => navigate("/login")}>already registered?</Typography>
-          <Button
-            variant="contained"
-            style={{ width: "40%"}}
-            onClick={submit}
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password" size="small">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            size="small"
+            onChange={(e) => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            className={css.caption}
+            variant="caption"
+            onClick={() => navigate("/login")}
           >
+            already registered?
+          </Typography>
+          <Button variant="contained" style={{ width: "40%" }} onClick={submit}>
             SignUp
           </Button>
+        </Box>
+        <Box>
+          {error && <Alert severity="error" style={{ fontSize: "12px", maxWidth: "292px" }}  ><span dangerouslySetInnerHTML={{__html: error}}></span> </Alert>}
         </Box>
       </Box>
     </Box>
