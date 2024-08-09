@@ -11,15 +11,32 @@ pipeline {
         stage('Lint') {
             steps {
                 dir('server') {
-                    sh "pylint ."
+                    script {
+                        sh 'pip install requirments.txt'
+                        def pylintOutput = bat(script: 'pylint . --exit-zero', returnStdout: true)
+                        def match = pylintOutput =~ /Your code has been rated at ([0-9.]+)/
+
+                        if (match) {
+                            def pylintScore = match[0][1].toFloat()
+                            echo "Pylint score: ${pylintScore}"
+
+                            if (pylintScore < 8.0) { // 8.0 corresponds to 80/100
+                                error 'Pylint score is below 80! Failing the build.'
+                            }
+                        } else {
+                            error 'Failed to parse pylint output!'
+                        }
+                    }
                 }
-            } 
+            }
         }
 
         stage('Tests') {
             steps {
                 script {
-                      sh "echo Test"
+                    sh 'echo Running app for Tests'
+                    sh 'docker compose up -d --build'
+                    sh 'docker-compose exec server bash -c "PYTHONPATH=. pytest -s"'
                 }
             }
         }
@@ -27,7 +44,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "echo build"
+                    sh 'echo build'
                 }
             }
         }
@@ -35,7 +52,7 @@ pipeline {
         stage('Push Artifactory') {
             steps {
                 script {
-                   sh "echo Push Artifactory"
+                    sh 'echo Push Artifactory'
                 }
             }
         }
