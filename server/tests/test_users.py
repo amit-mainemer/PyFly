@@ -1,7 +1,7 @@
 import pytest
-from server.app import db, app
-from server.models import User
-from tests.mock import mock_user, second_mock_user, failed_password_mock_user
+from server.tests.test_app import app
+from server.models import db, User
+from server.tests.mock import mock_user, second_mock_user, failed_password_mock_user
 
 
 @pytest.fixture

@@ -1,5 +1,5 @@
 
-from seeds.FlightSeeder import get_random_time_this_week
+from server.seeds.FlightSeeder import get_random_time_this_week
 
 
 mock_user = {
@@ -38,7 +38,5 @@ flight_date = get_random_time_this_week()
 
 mock_flight = {
     "remaining_seats": 1,
-    # "dest_country_id": 9999,
-    # "origin_country_id": 99999,
     "date": flight_date
 }

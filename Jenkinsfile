@@ -34,30 +34,27 @@ pipeline {
 
         stage('Tests') {
             steps {
-                script {
-                    echo 'Running app for Tests'
-                    try {
-                        sh 'docker compose up --build'
-                        sh 'docker compose exec server bash -c "PYTHONPATH=. pytest -s"'
-                    } finally {
-                        sh 'docker compose down'
-                    }
+                dir('server') {
+                    sh 'python3 -m venv venv'
+                    sh 'venv/bin/pip install -r requirements.txt'                    
+                    sh 'venv/bin/pytest --maxfail=1 --disable-warnings -q --junitxml=reports/results.xml'
                 }
             }
         }
 
         stage('Build') {
             steps {
-                script {
-                    sh 'echo build'
+                dir('server') {
+                    script {
+                        sh 'docker build -t pyfly/pyfly_server:latest .'
+                        sh 'docker push pyfly/pyfly_server:latest'
+                    }
                 }
-            }
-        }
-
-        stage('Push Artifactory') {
-            steps {
-                script {
-                    sh 'echo Push Artifactory'
+                dir('client') {
+                    script {
+                        sh 'docker build -t pyfly/pyfly_client:latest .'
+                        sh 'docker push pyfly/pyfly_client:latest'
+                    }
                 }
             }
         }

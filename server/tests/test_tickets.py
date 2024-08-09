@@ -1,10 +1,9 @@
 import pytest
-from server.app import (
+from server.tests.test_app import (
     app,
-    db,
-)  # Assuming your Flask app and SQLAlchemy instance are in app.py
-from server.models import Flight, User, Country, Ticket
-from tests.mock import mock_flight, mock_user, mock_country, mock_country2
+)
+from server.models import db, Flight, User, Country, Ticket
+from server.tests.mock import mock_flight, mock_user, mock_country, mock_country2
 from server.logger import logger
 
 
