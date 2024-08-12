@@ -1,4 +1,4 @@
-from server.app import create_app
+from server.application import create_app
 from server.models import db
 
 app = create_app("sqlite:///:memory:", True)

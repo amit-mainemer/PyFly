@@ -1,0 +1,24 @@
+  name: Deploy application and restart Nginx
+  hosts: all
+  become: true
+  vars:
+    server_name: "{{ server_name }}"  # Variable to receive server_name
+
+  tasks:
+    - name: Ensure Docker Compose is installed
+      command: docker-compose --version
+      register: docker_compose_version
+      failed_when: docker_compose_version.rc != 0
+
+    - name: Build and start Docker containers
+      command: docker-compose up -d --build
+      args:
+        chdir: /path/to/your/docker-compose/directory
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        state: restarted
