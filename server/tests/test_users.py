@@ -4,7 +4,6 @@ from models import db, User
 from mock import mock_user, second_mock_user, failed_password_mock_user
 
 
-
 @pytest.fixture
 def client():
     with app.test_client() as client:

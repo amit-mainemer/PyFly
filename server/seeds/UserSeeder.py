@@ -5,7 +5,6 @@ from logger import logger
 
 fake = Faker()
 
-
 class UserSeeder(Seeder):
     def __init__(self, db=None):
         super().__init__(db=db)

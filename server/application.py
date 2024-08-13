@@ -24,8 +24,11 @@ def create_app(db_uri, testing=False):
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 604800  # 1 week
     JWTManager(app)
 
+    logger.info("Migrating the database")
     db.init_app(app)
     Migrate(app, db)
+
+    logger.info("Seeding the database")
     seeder = FlaskSeeder()
     seeder.init_app(app, db)
 
