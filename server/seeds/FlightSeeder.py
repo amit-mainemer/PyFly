@@ -1,9 +1,9 @@
 from flask_seeder import Seeder
 import random
 from datetime import datetime, timedelta
-from server.models import Flight, Country
-from server.logger import logger
-from server.schemas import country_to_dict
+from models import Flight, Country
+from logger import logger
+from schemas import country_to_dict
 
 
 def get_random_time_this_week():

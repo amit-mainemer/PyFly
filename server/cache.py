@@ -1,6 +1,6 @@
 import os
 import redis
-from server.logger import logger
+from logger import logger
 
 env = os.environ["FLASK_ENV"]
 
@@ -15,7 +15,7 @@ logger.info(f"Connecting to Redis at {redis_host}:{redis_port}")
 
 try:
     redis_client = redis.StrictRedis(
-        host=redis_host,  port=redis_port, decode_responses=True
+        host=redis_host, port=redis_port, decode_responses=True
     )
     # Test the connection
     redis_client.ping()

@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource, request
-from server.models import User, db
-from server.schemas import CreateUserSchema, user_to_dict
+from models import User, db
+from schemas import CreateUserSchema, user_to_dict
 
 
 class UserResource(Resource):

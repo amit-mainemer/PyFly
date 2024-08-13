@@ -1,14 +1,14 @@
 from flask_restful import Api
-from server.resources.Home import Home
-from server.resources.UsersResource import UsersResource
-from server.resources.UserResource import UserResource
-from server.resources.FlightsResource import FlightsResource
-from server.resources.LoginResource import LoginResource
-from server.resources.CountriesResource import CountriesResource
-from server.resources.TicketsResource import TicketsResource
-from server.resources.TicketResource import TicketResource
-from server.resources.UserTicketResource import UserTicketResource
-from server.logger import logger
+from resources.Home import Home
+from resources.UsersResource import UsersResource
+from resources.UserResource import UserResource
+from resources.FlightsResource import FlightsResource
+from resources.LoginResource import LoginResource
+from resources.CountriesResource import CountriesResource
+from resources.TicketsResource import TicketsResource
+from resources.TicketResource import TicketResource
+from resources.UserTicketResource import UserTicketResource
+from logger import logger
 
 
 def register_resources(app):

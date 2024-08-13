@@ -14,6 +14,8 @@ RUN pip install -r requirements.txt
 
 RUN pip install pytest
 
+RUN chmod +x /server/entry.sh
+
 EXPOSE 5000
 
-CMD ["./entrypoint.sh"]
+CMD ["./entry.sh"]

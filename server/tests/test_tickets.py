@@ -1,11 +1,10 @@
 import pytest
-from server.tests.test_app import (
+from test_app import (
     app,
 )
-from server.models import db, Flight, User, Country, Ticket
-from server.tests.mock import mock_flight, mock_user, mock_country, mock_country2
-from server.logger import logger
-
+from models import db, Flight, User, Country, Ticket
+from mock import mock_flight, mock_user, mock_country, mock_country2
+from logger import logger
 
 @pytest.fixture
 def client():

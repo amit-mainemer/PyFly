@@ -1,7 +1,7 @@
 from faker import Faker
 from flask_seeder import Seeder
-from server.models import User
-from server.logger import logger
+from models import User
+from logger import logger
 
 fake = Faker()
 

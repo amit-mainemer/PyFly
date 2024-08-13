@@ -2,8 +2,8 @@ import json
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
-from server.models import User, db, Ticket, Flight
-from server.schemas import CreateTicketSchema, ticket_to_dict
+from models import User, db, Ticket, Flight
+from schemas import CreateTicketSchema, ticket_to_dict
 
 
 class TicketsResource(Resource):

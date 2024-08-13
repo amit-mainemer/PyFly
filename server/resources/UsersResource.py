@@ -1,10 +1,10 @@
 import json
 from flask_restful import Resource
 from flask import request
-from server.models import User, db
-from server.schemas import CreateUserSchema, user_to_dict
+from models import User, db
+from schemas import CreateUserSchema, user_to_dict
 from marshmallow import ValidationError
-from server.logger import logger
+from logger import logger
 
 
 class UsersResource(Resource):

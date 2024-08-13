@@ -3,7 +3,11 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'pyfly-repo-hub-cred'
-    }   
+    }
+
+    parameters {
+        string(name: 'EC2_IP', defaultValue: '', description: 'The public IP of the EC2 instance')
+    }
 
     stages {
         stage('Checkout') {
@@ -40,15 +44,15 @@ pipeline {
             steps {
                 dir('server') {
                     sh 'python3 -m venv venv'
-                    sh 'venv/bin/pip install -r requirements.txt'                    
-                    sh 'venv/bin/pytest . --maxfail=1'
+                    sh 'venv/bin/pip install -r requirements.txt'
+                    sh 'export FLASK_ENV=testing && export PYTHONPATH=$(pwd) && venv/bin/pytest . --maxfail=1'
                 }
             }
         }
 
         stage('Build & Push images') {
             steps {
-                  script {
+                script {
                     withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin'
                     }
@@ -71,7 +75,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'echo Deploy'
+                    // Deploy using Ansible
+                    sh 'echo deploy'
+                // ansiblePlaybook(
+                //     playbook: 'deploy.yml',
+                //     inventory: "localhost,",
+                //     extras: "-e 'ec2_ip=${params.EC2_IP} ec2_key=${params.EC2_KEY}'"
+                // )
                 }
             }
         }

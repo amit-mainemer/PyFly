@@ -1,8 +1,8 @@
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource, request
-from server.models import Ticket, db
-from server.schemas import CreateTicketSchema, ticket_to_dict
-from server.logger import logger
+from models import Ticket, db
+from schemas import CreateTicketSchema, ticket_to_dict
+from logger import logger
 
 
 class TicketResource(Resource):

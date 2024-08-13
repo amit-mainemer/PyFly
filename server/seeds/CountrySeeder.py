@@ -1,8 +1,8 @@
 import requests
 import json
 from flask_seeder import Seeder
-from server.models import Country
-from server.logger import logger
+from models import Country
+from logger import logger
 
 
 class CountrySeeder(Seeder):

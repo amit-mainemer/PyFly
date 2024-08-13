@@ -1,24 +1,9 @@
-  name: Deploy application and restart Nginx
-  hosts: all
-  become: true
-  vars:
-    server_name: "{{ server_name }}"  # Variable to receive server_name
-
+- name: Deploy application to EC2
+  hosts: localhost
   tasks:
-    - name: Ensure Docker Compose is installed
-      command: docker-compose --version
-      register: docker_compose_version
-      failed_when: docker_compose_version.rc != 0
-
-    - name: Build and start Docker containers
-      command: docker-compose up -d --build
-      args:
-        chdir: /path/to/your/docker-compose/directory
-      notify:
-        - Restart Nginx
-
-  handlers:
-    - name: Restart Nginx
-      systemd:
-        name: nginx
-        state: restarted
+    - name: Run docker-compose on EC2
+      ansible.builtin.shell: |
+        ssh -i "{{ ec2_key }}" ubunto@{{ ec2_ip }} "cd /path/to/your/app && docker-compose up --build -d"
+      environment:
+        ANSIBLE_SSH_ARGS: "-o StrictHostKeyChecking=no"
+      delegate_to: localhost

@@ -2,10 +2,10 @@ import json
 import time
 from flask import request
 from flask_restful import Resource
-from server.models import Flight
-from server.schemas import flight_to_dict
-from server.logger import logger
-from server.cache import redis_client
+from models import Flight
+from schemas import flight_to_dict
+from logger import logger
+from cache import redis_client
 
 SP_EXPIRATION = 600  # 10 minutes
 ROWS_PER_PAGE = 10

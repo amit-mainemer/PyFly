@@ -3,8 +3,8 @@ from flask_restful import Resource
 from flask import request
 from marshmallow import ValidationError
 from flask_jwt_extended import jwt_required
-from server.models import Country, db
-from server.schemas import CreateCountrySchema, country_to_dict
+from models import Country, db
+from schemas import CreateCountrySchema, country_to_dict
 
 
 class CountriesResource(Resource):

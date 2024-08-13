@@ -1,6 +1,6 @@
 from flask_restful import Resource
-from server.models import Ticket
-from server.schemas import ticket_to_dict
+from models import Ticket
+from schemas import ticket_to_dict
 
 
 class UserTicketResource(Resource):

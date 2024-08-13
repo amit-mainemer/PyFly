@@ -1,5 +1,5 @@
 
-from server.seeds.FlightSeeder import get_random_time_this_week
+from seeds.FlightSeeder import get_random_time_this_week
 
 
 mock_user = {

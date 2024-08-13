@@ -1,7 +1,7 @@
 from flask_restful import Resource, request
 from flask_jwt_extended import create_access_token
-from server.models import User
-from server.logger import logger
+from models import User
+from logger import logger
 
 
 class LoginResource(Resource):

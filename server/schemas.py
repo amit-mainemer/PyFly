@@ -1,6 +1,6 @@
 from marshmallow import fields, validate, Schema, ValidationError
-from server.models import Country, User, Flight
-from server.logger import logger
+from models import Country, User, Flight
+from logger import logger
 import re
 
 def validate_password(password):
