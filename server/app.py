@@ -35,3 +35,6 @@ def create_app(db_uri, testing=False):
     CORS(app)
     register_resources(app)
     return app
+
+
+

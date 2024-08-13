@@ -14,7 +14,7 @@ services:
   server:
     image: pyfly/pyfly_server:latest
     environment:
-      FLASK_APP: application.py
+      FLASK_APP: start.py
       FLASK_ENV: ${FLASK_ENV}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

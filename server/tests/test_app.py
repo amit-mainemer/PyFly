@@ -1,6 +1,6 @@
 
 import os
-from application import create_app
+from app import create_app
 from models import db
 
 os.environ['FLASK_ENV'] = 'testing'

@@ -1,6 +1,7 @@
 import os
-from application import create_app
+from app import create_app
 from logger import logger
+
 
 if __name__ == "__main__":
     env = os.environ.get("FLASK_ENV", "development")
@@ -12,4 +13,4 @@ if __name__ == "__main__":
         db_uri = f"postgresql://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@db:5432/{os.environ['POSTGRES_DB']}"
 
     app = create_app(db_uri)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -10,6 +10,7 @@ if os.environ["FLASK_ENV"] == "testing":
 else:
     logstash_host = "logstash"
     logstash_port = 5044
+
     class LogstashFormatter(logging.Formatter):
         def format(self, record):
             message = super().format(record)
@@ -21,13 +22,6 @@ else:
                 }
             )
 
-    # Create Logstash handler
-    logstash_handler = AsynchronousLogstashHandler(
-        logstash_host, logstash_port, database_path=None
-    )
-    logstash_handler.setFormatter(LogstashFormatter())
-    logstash_handler.setLevel(logging.INFO)
-
     # Create console handler
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
@@ -35,9 +29,19 @@ else:
         logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
     )
 
-    # Configure root logger
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
+    try:
+        logstash_handler = AsynchronousLogstashHandler(
+            logstash_host, logstash_port, database_path=None
+        )
+        logstash_handler.setFormatter(LogstashFormatter())
+        logstash_handler.setLevel(logging.INFO)
+        logger.addHandler(logstash_handler)
+    except Exception as e:
+        # Logstash handler failed to set up; log this error to console
+        logger.error(f"Failed to set up Logstash handler: {e}")
+        
     logger.addHandler(logstash_handler)
     logger.addHandler(console_handler)
 

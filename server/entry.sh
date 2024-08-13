@@ -8,4 +8,3 @@ done
 
 echo "Starting the application..."
 exec python start.py
-
