@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'pyfly-repo-hub-cred'
+        SSH_KEY_ID  = 'pyfly_ssh_key'
     }
 
     parameters {
@@ -75,13 +76,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy using Ansible
-                    sh 'echo deploy'
-                // ansiblePlaybook(
-                //     playbook: 'deploy.yml',
-                //     inventory: "localhost,",
-                //     extras: "-e 'ec2_ip=${params.EC2_IP} ec2_key=${params.EC2_KEY}'"
-                // )
+                    sshagent([env.SSH_KEY_ID]) {
+                        sh """
+                        echo "Deploying to EC2 instance..."
+                        ssh -o StrictHostKeyChecking=no ubuntu@${env.EC2_IP} \
+                            'docker-compose down; docker-compose pull; docker-compose up --build -d'
+                        """
+                    }
                 }
             }
         }

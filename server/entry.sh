@@ -6,10 +6,12 @@ while ! pg_isready -h db -p 5432 -q -U admin; do
   sleep 2
 done
 
+
+exec set PYTHONPATH=./
+
 flask db upgrade
 
 flask seed run
 
-exec set PYTHONPATH=./
 
-exec python start.py
+exec flask run --host=0.0.0.0
