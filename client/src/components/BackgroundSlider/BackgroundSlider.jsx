@@ -1,44 +1,20 @@
-import React, { useState, useEffect } from "react";
-import css from "./BackgroundSlider.module.css";
+import React from "react";
+import trees from "../../assets/trees.jpg";
+import paris from "../../assets/paris.jpg";
+import grand from "../../assets/grand.jpg";
+import ice from "../../assets/ice.jpg";
+import ny from "../../assets/ny.jpg";
+import baloon from "../../assets/baloon.jpg";
+import desert from "../../assets/desert.jpg";
+import lake from "../../assets/lake.jpg";
+import BackgroundSlider from "react-background-slider";
 
-const images = ["trees.jpg", "paris.jpg", "ice.jpg", "ny.jpg", "greece.jpg"];
-
-const BackgroundSlider = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [nextImage, setNextImage] = useState(images[1]);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-
-      setNextImage(images[(currentImage + 1) % images.length]);
-
-      setTimeout(() => {
-        setCurrentImage((currentImage + 1) % images.length);
-        setIsTransitioning(false);
-      }, 1000); // Duration of the transition in milliseconds
-    }, 10000); // Interval for changing images
-
-    return () => clearInterval(interval);
-  }, [currentImage]);
-
+export const BackgroundSliderCustom = () => {
   return (
-    <div className={css.backgroundSlider}>
-      <div
-        className={`${css.backgroundImage} ${
-          isTransitioning ? css.fadeOut : css.fadeIn
-        }`}
-        style={{ backgroundImage: `url(${images[currentImage]})` }}
-      ></div>
-      <div
-        className={`${css.backgroundImage} ${
-          isTransitioning ? css.fadeIn : css.fadeOut
-        }`}
-        style={{ backgroundImage: `url(${nextImage})` }}
-      ></div>
-    </div>
+    <BackgroundSlider
+      images={[lake, trees, paris, grand, ice, ny, desert, baloon]}
+      duration={8}
+      transition={1}
+    />
   );
 };
-
-export default BackgroundSlider;

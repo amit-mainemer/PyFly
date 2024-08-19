@@ -2,6 +2,7 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { SignUp } from "./pages/SignUp";
+import { NotFound } from "./pages/NotFound";
 
 export const routes = [{
         link: "/",
@@ -24,5 +25,10 @@ export const routes = [{
         link: "/signup",
         name: "Signup",
         Component: SignUp,
+    },
+    {
+        link: "*",
+        name: "404",
+        Component: NotFound,
     },
 ];

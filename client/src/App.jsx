@@ -1,8 +1,8 @@
 import { AppRouter } from "./AppRouter";
 import { AuthProvider } from "./AuthContext";
-import BackgroundSlider from "./components/BackgroundSlider/BackgroundSlider";
+import { BackgroundSliderCustom } from "./components/BackgroundSlider/BackgroundSlider";
 import { SnackbarProvider } from "./SnackbarContext";
-import {  ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   palette: {
@@ -12,14 +12,13 @@ export const theme = createTheme({
   },
 });
 
-
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <SnackbarProvider>
-            <BackgroundSlider />
+            <BackgroundSliderCustom />
             <AppRouter />
           </SnackbarProvider>
         </AuthProvider>
