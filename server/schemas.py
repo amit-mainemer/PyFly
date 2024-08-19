@@ -61,11 +61,9 @@ def flight_to_dict(flight):
 
 
 def ticket_to_dict(ticket):
-    logger.debug(f"ticket {ticket.user_id} {ticket.flight_id}")
     user_id = ticket.user_id
     flight_id = ticket.flight_id
     user = User.query.filter_by(id=user_id).first()
-    logger.debug(user)
     flight = Flight.query.filter_by(id=flight_id).first()
     return {
         "id": ticket.id,

@@ -27,10 +27,6 @@ def flight_setup(seats):
     origin_country = country_setup(mock_country["name"], mock_country["code"])
     dest_country = country_setup(mock_country2["name"], mock_country2["code"])
 
-    logger.debug("flight setup")
-    logger.debug(origin_country.id)
-    logger.debug(dest_country.id)
-
     test_flight = Flight.query.filter_by(dest_country_id=dest_country.id).first()
     if test_flight is None:
         test_flight = Flight(

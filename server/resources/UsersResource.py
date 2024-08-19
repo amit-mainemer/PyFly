@@ -15,13 +15,15 @@ class UsersResource(Resource):
 
     def post(self):
         create_user_schema = CreateUserSchema()
-        logger.info(json.loads(request.data))
+
         try:
             data = create_user_schema.load(json.loads(request.data))
         except ValidationError as err:
+            logger.warn(f"User signup attempt failed 422")
             return {"messages": err.messages}, 422
-
+        
         newUser = User(data["full_name"], data["password"], data["real_id"])
         db.session.add(newUser)
         db.session.commit()
+        logger.info(f"New user signup newUserId: {newUser.id}" )
         return {"newUserId": newUser.id}

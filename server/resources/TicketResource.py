@@ -26,7 +26,7 @@ class TicketResource(Resource):
 
     @jwt_required()
     def delete(self, id):
-        logger.debug(id)
+        logger.debug(f"delete ticket" + id)
         ticket = Ticket.query.get(int(id))
         if ticket is None:
             return {"message": "ticket not found"}, 400
