@@ -25,18 +25,27 @@ else:
     # Create console handler
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.DEBUG)
+    console_handler.setLevel(logging.WARN)
+    console_handler.setLevel(logging.ERROR)
     console_handler.setFormatter(
         logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
     )
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.ERROR)
+    logger.setLevel(logging.WARN)
     try:
         logstash_handler = AsynchronousLogstashHandler(
             logstash_host, logstash_port, database_path=None
         )
         logstash_handler.setFormatter(LogstashFormatter())
         logstash_handler.setLevel(logging.INFO)
+        logstash_handler.setLevel(logging.DEBUG)
+        logstash_handler.setLevel(logging.WARN)
+        logstash_handler.setLevel(logging.ERROR)
         logger.addHandler(logstash_handler)
     except Exception as e:
         # Logstash handler failed to set up; log this error to console
