@@ -19,8 +19,7 @@ class CountrySeeder(Seeder):
 
         res = requests.get(url="https://restcountries.com/v3.1/all")
         data = res.json()
-        arr = json.loads(data)
-        for country in arr:
+        for country in data:
             countryName = country["name"]["official"]
             country = Country(countryName, country["cca3"])
             self.db.session.add(country)

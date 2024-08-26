@@ -21,6 +21,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "proxy": "http://server:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,7 +34,6 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",

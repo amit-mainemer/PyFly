@@ -79,8 +79,8 @@ pipeline {
                     sshagent([env.SSH_KEY_ID]) {
                         sh """
                         echo "Deploying to EC2 instance..."
-                        ssh -o StrictHostKeyChecking=no ubuntu@${env.EC2_IP} \
-                            'docker-compose down; docker-compose pull; docker-compose up --build -d'
+                        ssh -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} \
+                            'docker-compose down; docker container prune; docker-compose pull; docker-compose up -d --build'
                         """
                     }
                 }
