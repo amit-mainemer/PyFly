@@ -80,7 +80,7 @@ pipeline {
                         sh """
                         echo "Deploying to EC2 instance..."
                         ssh -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} \
-                            'docker-compose down; docker container prune; docker-compose pull; docker-compose up -d --build'
+                            'docker-compose down; docker container prune; docker rmi pyfly/pyfly_client:latest; docker rmi pyfly/pyfly_server:latest; docker-compose pull; docker-compose up -d'
                         """
                     }
                 }

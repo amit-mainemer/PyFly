@@ -2,19 +2,20 @@ import requests
 import json
 from flask_seeder import Seeder
 from models import Country
-from logger import logger
+from logger import get_logger
 
 
 class CountrySeeder(Seeder):
     def __init__(self, db=None):
         super().__init__(db=db)
         self.priority = 5
+        self.logger = get_logger()
 
     def run(self):
-        logger.info("Seeding CountrySeeder")
+        self.logger.info("Seeding CountrySeeder")
         countries = Country.query.all()
         if len(countries) > 0:
-            logger.info("Existing CountrySeeder. data exists")
+            self.logger.info("Existing CountrySeeder. data exists")
             return
 
         res = requests.get(url="https://restcountries.com/v3.1/all")

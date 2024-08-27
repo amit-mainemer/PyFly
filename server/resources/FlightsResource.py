@@ -4,8 +4,8 @@ from flask import request
 from flask_restful import Resource
 from models import Flight
 from schemas import flight_to_dict
-from logger import logger
 from cache import redis_client
+from logger import get_logger
 
 SP_EXPIRATION = 600  # 10 minutes
 ROWS_PER_PAGE = 10
@@ -18,6 +18,9 @@ def cache_sp(sp_key: str, result):
 
 
 class FlightsResource(Resource):
+    def __init__(self):
+        self.logger = get_logger("flights_resource")
+        
     def get(self):
         origin_country_id = request.args.get("from")
         dest_country_id = request.args.get("to")
@@ -32,10 +35,9 @@ class FlightsResource(Resource):
             current_time = int(time.time())
 
             if current_time - timestamp < SP_EXPIRATION:
-                logger.info("Returning cached result")
                 return cached_result["value"]
-
-        logger.info("Calling Stored Procedure saving query to cache")
+            
+        self.logger.info("Calling Stored Procedure saving flights query to cache")
 
         flights_query = Flight.query
         if origin_country_id:

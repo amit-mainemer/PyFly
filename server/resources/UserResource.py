@@ -2,9 +2,12 @@ from flask import jsonify
 from flask_restful import Resource, request
 from models import User, db
 from schemas import CreateUserSchema, user_to_dict
-
+from logger import get_logger
 
 class UserResource(Resource):
+    def __init__(self):
+        self.logger = get_logger("user_resource")
+        
     def get(self, id):
         user = User.query.get_or_404(id)
         return user_to_dict(user), 200

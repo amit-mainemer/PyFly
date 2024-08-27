@@ -8,10 +8,10 @@ from resources.CountriesResource import CountriesResource
 from resources.TicketsResource import TicketsResource
 from resources.TicketResource import TicketResource
 from resources.UserTicketResource import UserTicketResource
-from logger import logger
-
+from logger import get_logger
 
 def register_resources(app):
+    logger = get_logger("resources")
     logger.info("register_resources")
     api = Api(app)
     api.add_resource(Home, "/")

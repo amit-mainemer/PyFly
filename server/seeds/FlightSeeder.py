@@ -2,8 +2,9 @@ from flask_seeder import Seeder
 import random
 from datetime import datetime, timedelta
 from models import Flight, Country
-from logger import logger
 from schemas import country_to_dict
+from logger import get_logger
+
 
 
 def get_random_time_this_week():
@@ -21,12 +22,13 @@ class FlightSeeder(Seeder):
     def __init__(self, db=None):
         super().__init__(db=db)
         self.priority = 10
+        self.logger = get_logger("flight_seeder")
 
     def run(self):
-        logger.info("Seeding FlightSeeder")
+        self.logger.info("Seeding FlightSeeder")
         flights = Flight.query.all()
         if len(flights) > 0:
-            logger.info("Exiting FlightSeeder. data exists")
+            self.logger.info("Exiting FlightSeeder. data exists")
             return
         countries = Country.query.all()
         countries_dicts = [country_to_dict(country) for country in countries]

@@ -1,6 +1,6 @@
 import os
 import redis
-from logger import logger
+from logger import get_logger
 
 env = os.environ["FLASK_ENV"]
 
@@ -8,6 +8,8 @@ if env != "production":
     redis_host = "localhost"
 else:
     redis_host = "redis"
+
+logger = get_logger()
 
 redis_port = 6379
 

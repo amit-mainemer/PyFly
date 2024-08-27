@@ -2,17 +2,21 @@ import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from models import db
-from logger import logger
 from api import register_resources
-
+from logger import get_logger
 
 def create_app(db_uri, testing=False):
     if testing:
         os.environ["FLASK_ENV"] = "testing"
 
     app = Flask(__name__)
+    
+    # Integrate your logger with Flask
+    logger = get_logger()
+    app.logger.handlers = logger.handlers
+    app.logger.setLevel(logger.level)
 
-    logger.info(f"init db uri: {db_uri}")
+    app.logger.info(f"Connect to postgres db...")
     app.config["TESTING"] = testing
     app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

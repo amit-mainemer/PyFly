@@ -8,6 +8,9 @@ from schemas import CreateCountrySchema, country_to_dict
 
 
 class CountriesResource(Resource):
+    def __init__(self, **kwargs):
+        self.logger = kwargs.get('logger')
+        
     @jwt_required()
     def get(self):
         countries = Country.query.all()

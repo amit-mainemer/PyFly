@@ -4,9 +4,13 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 from models import User, db, Ticket, Flight
 from schemas import CreateTicketSchema, ticket_to_dict
+from logger import get_logger
 
 
 class TicketsResource(Resource):
+    def __init__(self):
+        self.logger = get_logger("tickets_resource")
+        
     def get(self):
         tickets = Ticket.query.all()
         if tickets is None:
@@ -20,6 +24,7 @@ class TicketsResource(Resource):
             data = create_ticket_schema.load(json.loads(request.data))
         except ValidationError as err:
             return {"errors": err.messages}, 422
+        
 
         flight = Flight.query.filter_by(id=data["flight_id"]).first()
         if flight is None:
@@ -35,4 +40,5 @@ class TicketsResource(Resource):
         flight.remaining_seats -= 1
         db.session.add(newTicket)
         db.session.commit()
+        self.logger(f"New ticket was bought successfully. ticketId: {newTicket.id}")
         return {"newTicketId": newTicket.id}

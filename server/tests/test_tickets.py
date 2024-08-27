@@ -4,7 +4,6 @@ from test_app import (
 )
 from models import db, Flight, User, Country, Ticket
 from mock import mock_flight, mock_user, mock_country, mock_country2
-from logger import logger
 
 @pytest.fixture
 def client():

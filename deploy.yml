@@ -1,9 +1,0 @@
-- name: Deploy application to EC2
-  hosts: localhost
-  tasks:
-    - name: Run docker-compose on EC2
-      ansible.builtin.shell: |
-        ssh -i "{{ ec2_key }}" ubunto@{{ ec2_ip }} "cd /path/to/your/app && docker-compose up --build -d"
-      environment:
-        ANSIBLE_SSH_ARGS: "-o StrictHostKeyChecking=no"
-      delegate_to: localhost

@@ -2,10 +2,12 @@ from flask_jwt_extended import jwt_required
 from flask_restful import Resource, request
 from models import Ticket, db
 from schemas import CreateTicketSchema, ticket_to_dict
-from logger import logger
-
+from logger import get_logger
 
 class TicketResource(Resource):
+    def __init__(self):
+        self.logger = get_logger("ticket_resource")
+        
     def get(self, id):
         ticket = Ticket.query.get_or_404(id)
         return ticket_to_dict(ticket), 200
@@ -26,7 +28,7 @@ class TicketResource(Resource):
 
     @jwt_required()
     def delete(self, id):
-        logger.debug(f"delete ticket" + id)
+        self.logger.info(f"Deleting ticket {id}")
         ticket = Ticket.query.get(int(id))
         if ticket is None:
             return {"message": "ticket not found"}, 400
