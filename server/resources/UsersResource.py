@@ -23,6 +23,11 @@ class UsersResource(Resource):
         except ValidationError as err:
             self.logger.warn(f"User signup attempt failed 422")
             return {"messages": err.messages}, 422
+    
+        existing_user = User.query.filter_by(real_id=data["real_id"]).first()
+        if existing_user:
+            self.logger.warn(f"User signup failed: User with id '{data['real_id']}' already exists.")
+            return {"messages": {"full_name": ["A user with this id already exists."]}}, 400
         
         newUser = User(data["full_name"], data["password"], data["real_id"])
         db.session.add(newUser)

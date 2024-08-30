@@ -1,0 +1,1 @@
+TICKETS_ORDER_QUEUE="ticket_orders"

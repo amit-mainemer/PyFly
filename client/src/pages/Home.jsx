@@ -1,10 +1,11 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, LinearProgress } from "@mui/material";
 import { FlightsFrom } from "../components/FlightsFrom/FlightsForm";
 import { FlightsList } from "../components/FlightsList/FlightsList";
 import { api } from "../api";
 
 export const Home = () => {
+  const [loading, setLoading] = useState(true);
   const [flights, setFlights] = useState([]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -23,6 +24,7 @@ export const Home = () => {
   }, [setCountries]);
 
   const fetchFlights = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await api.get(
         `/flights?page=${page}&from=${from}&to=${to}&date=${date}`
@@ -31,8 +33,10 @@ export const Home = () => {
       setPages(response.data.pages);
     } catch (ex) {
       console.warn(ex);
+    } finally {
+      setLoading(false);
     }
-  }, [setFlights, page, from, to, date]);
+  }, [setFlights, page, from, to, date, setLoading]);
 
   const searchFlights = ({ from, to, date }) => {
     setPage(1);
@@ -65,6 +69,10 @@ export const Home = () => {
           pages={pages}
           refresh={fetchFlights}
         />
+      ) : loading ? (
+        <Box className="t-card">
+          <LinearProgress />
+        </Box>
       ) : (
         <Box className="t-card">
           <Typography variant="subtitle1">
