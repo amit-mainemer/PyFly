@@ -31,6 +31,7 @@ services:
       - db
       - redis
       - logstash
+      - rabbitmq
 
   client:
     build:
